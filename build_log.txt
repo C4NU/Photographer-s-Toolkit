@@ -1,0 +1,26 @@
+
+> photographer-toolkit@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1484.7ms
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/11) ...
+⨯ useSearchParams() should be wrapped in a suspense boundary at page "/admin". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+    at Q (/Users/canu/Development/Web/Web Apps/photographer-tool/.next/server/chunks/ssr/node_modules_f849de12._.js:2:2111)
+    at o (/Users/canu/Development/Web/Web Apps/photographer-tool/.next/server/chunks/ssr/node_modules_f849de12._.js:4:5284)
+    at aI (/Users/canu/Development/Web/Web Apps/photographer-tool/.next/server/chunks/ssr/src_components_layout_Sidebar_tsx_b07f8796._.js:1:28305)
+    at an (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:84360)
+    at ai (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:86179)
+    at ai (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:104708)
+    at al (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:107953)
+    at as (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:105368)
+    at am (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:112882)
+    at au (/Users/canu/Development/Web/Web Apps/photographer-tool/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:109985)
+Error occurred prerendering page "/admin". Read more: https://nextjs.org/docs/messages/prerender-error
+Export encountered an error on /admin/page: /admin, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

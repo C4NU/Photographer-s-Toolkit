@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { DM_Serif_Display, DM_Sans, Noto_Sans_KR, Space_Mono } from "next/font/google";
 import "./globals.css";
@@ -42,7 +43,9 @@ export default function RootLayout({
       <body
         className={`${dmSerifDisplay.variable} ${dmSans.variable} ${notoSansKR.variable} ${spaceMono.variable} antialiased`}
       >
-        <Sidebar />
+        <Suspense fallback={null}>
+          <Sidebar />
+        </Suspense>
         <div className="flex flex-col min-h-screen md:pl-[260px] transition-[padding] duration-300">
           <main className="flex-1 pb-[70px] md:pb-0">
             {children}
