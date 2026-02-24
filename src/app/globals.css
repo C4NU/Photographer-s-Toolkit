@@ -41,7 +41,7 @@
   * {
     @apply border-[var(--border)];
   }
-  
+
   body {
     background: var(--bg);
     color: var(--text);
@@ -67,8 +67,35 @@
   .hero-gradient {
     background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(232, 168, 56, 0.12) 0%, transparent 70%);
   }
-  
+
   .dark .hero-gradient {
     background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(232, 168, 56, 0.12) 0%, transparent 70%);
+  }
+
+  .premium-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .premium-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .premium-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 20px;
+    transition: background 0.2s ease;
+  }
+
+  .premium-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
