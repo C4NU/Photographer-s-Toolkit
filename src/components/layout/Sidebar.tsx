@@ -31,10 +31,10 @@ import { supabase } from "@/lib/supabase";
 // 메뉴 데이터 구조
 const navigation = {
     main: [
-        { id: 'features', name: "기능", icon: Zap, desc: "골든아워, 캘린더 등", active: true },
-        { id: 'exhibitions', name: "전시", icon: ImageIcon, desc: "전시회 큐레이팅", active: false },
-        { id: 'tools', name: "도구", icon: Monitor, desc: "소프트웨어 추천", active: true },
-        { id: 'assets', name: "에셋 추천", icon: Layers, desc: "폰트, 이미지 등", active: false },
+        { id: 'features', name: "기능", icon: Zap, desc: "골든아워, 캘린더 등", active: true, href: "/golden-hour" },
+        { id: 'exhibitions', name: "전시", icon: ImageIcon, desc: "전시회 큐레이팅", active: false, href: "/exhibitions" },
+        { id: 'tools', name: "도구", icon: Monitor, desc: "소프트웨어 추천", active: true, href: "/tools" },
+        { id: 'assets', name: "에셋 추천", icon: Layers, desc: "폰트, 이미지 등", active: false, href: "/assets" },
     ],
     features: [
         { name: "골든아워", href: "/golden-hour", icon: Sunrise },
@@ -342,19 +342,24 @@ export default function Sidebar() {
                                         return (
                                             <button
                                                 key={item.id}
-                                                onClick={() => !isDisabled && setActiveCategory(item.id)}
+                                                onClick={() => {
+                                                    if (isDisabled) return;
+                                                    setActiveCategory(item.id);
+                                                    if (item.href) router.push(item.href);
+                                                }}
                                                 disabled={isDisabled}
                                                 className={cn(
                                                     "w-full flex items-center gap-3.5 px-3.5 py-4 rounded-xl transition-all relative group text-[var(--text-secondary)]",
                                                     isDisabled
                                                         ? "opacity-50 cursor-not-allowed"
-                                                        : "hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]"
+                                                        : "hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+                                                    activeCategory === item.id && "bg-[var(--bg-secondary)] text-[var(--text)]"
                                                 )}
                                             >
                                                 <div className={cn(
                                                     "shrink-0 w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--bg-secondary)] transition-colors",
                                                     !isDisabled && "group-hover:bg-amber-glow group-hover:text-amber",
-                                                    isDisabled ? "text-[var(--text-tertiary)]" : "text-[var(--text-tertiary)]"
+                                                    activeCategory === item.id ? "text-amber bg-amber-glow" : "text-[var(--text-tertiary)]"
                                                 )}>
                                                     <item.icon size={20} />
                                                 </div>
@@ -369,7 +374,7 @@ export default function Sidebar() {
                                                         <span className="text-[11px] text-[var(--text-tertiary)] mt-1">{item.desc}</span>
                                                     </div>
                                                 )}
-                                                {!isCollapsed && !isDisabled && <ChevronRight size={14} className="ml-auto text-[var(--text-tertiary)] opacity-0 group-hover:opacity-100 transition-opacity" />}
+                                                {!isCollapsed && !isDisabled && <ChevronRight size={14} className={cn("ml-auto text-[var(--text-tertiary)] transition-transform", activeCategory === item.id ? "rotate-90 text-amber" : "opacity-0 group-hover:opacity-100")} />}
                                             </button>
                                         );
                                     }
@@ -440,8 +445,12 @@ export default function Sidebar() {
                             key={item.id}
                             onClick={() => {
                                 if (isDisabled) return;
-                                if (activeCategory === item.id) setActiveCategory(null);
-                                else setActiveCategory(item.id);
+                                if (activeCategory === item.id) {
+                                    setActiveCategory(null);
+                                } else {
+                                    setActiveCategory(item.id);
+                                    if (item.href) router.push(item.href);
+                                }
                             }}
                             className={cn(
                                 "flex flex-col items-center gap-1 min-w-[64px] transition-all relative",

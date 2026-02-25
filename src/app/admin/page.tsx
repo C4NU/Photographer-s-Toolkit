@@ -2,12 +2,13 @@
 
 import {
     Trash2, Plus, Edit3, RefreshCw, ArrowLeft,
-    Layout, Database, Tag, Settings, Save, X, Loader2
+    Layout, Database, Tag, Settings, Save, X, Loader2, LogOut
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Tool {
     id: number | string;
@@ -41,10 +42,27 @@ export default function AdminPage() {
     const [newCatColor, setNewCatColor] = useState("#6496ff");
     const [editingTool, setEditingTool] = useState<Tool | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isAuthLoading, setIsAuthLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
-        fetchData();
+        checkAuth();
     }, []);
+
+    const checkAuth = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            router.push("/admin/login");
+        } else {
+            setIsAuthLoading(false);
+            fetchData();
+        }
+    };
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push("/admin/login");
+    };
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -115,7 +133,7 @@ export default function AdminPage() {
         if (!error) setCategories(categories.filter(c => c.id !== id));
     };
 
-    if (isLoading) {
+    if (isAuthLoading || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
                 <Loader2 className="animate-spin text-amber" size={48} />
@@ -136,6 +154,13 @@ export default function AdminPage() {
                         <div className="text-[11px] font-bold tracking-[2px] uppercase text-amber mb-3 text-mono">System Administration</div>
                         <h1 className="font-serif text-5xl text-[var(--text)] tracking-tight">Toolkit 관제실</h1>
                     </div>
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-[var(--border)]/20 text-[var(--text-secondary)] hover:text-red-400 hover:bg-red-400/5 transition-all font-bold text-sm group border border-transparent hover:border-red-400/20"
+                    >
+                        <LogOut size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                        로그아웃
+                    </button>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
